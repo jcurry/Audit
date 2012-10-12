@@ -57,7 +57,7 @@ Change History
 
 Screenshots
 ===========
-|deviceClasses_to_file]
+|deviceClasses_to_file|
 |processes_to_file|
 |users_to_file|
 
