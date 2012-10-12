@@ -64,7 +64,7 @@ Screenshots
 
 .. External References Below. Nothing Below This Line Should Be Rendered
 
-.. _Zenoss Audit Scripts: https://github.com/jcurry/Audit/blob/master/dist/ZenPacks.skills1st.bridge-1.0.5-py2.6.egg?raw=true
+.. _Zenoss Audit Scripts: https://github.com/downloads/jcurry/Audit/zenoss_audit_scripts.tar
 
 .. |deviceClasses_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/deviceClasses_to_file_out.jpg
 
