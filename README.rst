@@ -67,6 +67,8 @@ Screenshots
 .. _Zenoss Audit Scripts: https://github.com/downloads/jcurry/Audit/zenoss_audit_scripts.tar
 
 .. |deviceClasses_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/deviceClasses_to_file_out.jpg
+.. |processes_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/processes_to_file_out.jpg
+.. |users_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/users_to_file_out.jpg
 
                                                                         
 
