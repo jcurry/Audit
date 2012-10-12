@@ -57,8 +57,19 @@ Change History
 
 Screenshots
 ===========
+Device Class output
+-------------------
+
 |deviceClasses_to_file|
+
+Processes output
+-------------------
+
 |processes_to_file|
+
+Users output
+-------------------
+
 |users_to_file|
 
 
