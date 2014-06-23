@@ -11,6 +11,8 @@ in the Zenoss Zope database.
     * Devices
     * Device Classes
     * Device Groups
+    * Performance monitor for devices
+    * Templates for devices
     * Systems
     * Locations
     * Event classes with mappings
@@ -22,6 +24,8 @@ in the Zenoss Zope database.
     * Mibs
     * Processes
     * Collectors
+    * Triggers and notifications
+
 
 The scripts take a single parameter, "-f <output file>" eg.
 
@@ -53,6 +57,7 @@ Download the package from:
 Change History
 ==============
     * 1.0 initial release
+    * 1.1 Added devPerfMonitor.py , devTemplates_to_file.py , trigs_and_notifs.py
 
 
 Screenshots
