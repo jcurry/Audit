@@ -51,7 +51,7 @@ Download
 ========
 Download the package from:
 
-* Zenoss Audit Scripts `Zenoss Audit Scripts`    and select the Download ZIP button on the right-hand side
+* Zenoss Audit Scripts `Zenoss Audit Scripts`_    and select the Download ZIP button on the right-hand side
 
 
 Change History
