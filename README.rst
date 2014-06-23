@@ -49,9 +49,7 @@ Limitations
 
 Download
 ========
-Download the package from:
-
-* Zenoss Audit Scripts `Zenoss Audit Scripts`_    and select the Download ZIP button on the right-hand side
+Download the package by selecting the Download ZIP button on the right-hand side
 
 
 Change History
