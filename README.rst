@@ -51,7 +51,7 @@ Download
 ========
 Download the package from:
 
-* Zenoss Audit Scripts `Zenoss Audit Scripts`_
+* Zenoss Audit Scripts `Zenoss Audit Scripts`    and select the Download ZIP button on the right-hand side
 
 
 Change History
@@ -80,7 +80,7 @@ Users output
 
 .. External References Below. Nothing Below This Line Should Be Rendered
 
-.. _Zenoss Audit Scripts: https://github.com/downloads/jcurry/Audit/zenoss_audit_scripts.tar
+.. _Zenoss Audit Scripts: https://github.com/downloads/jcurry/Audit
 
 .. |deviceClasses_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/deviceClasses_to_file_out.jpg
 .. |processes_to_file| image:: http://github.com/jcurry/Audit/raw/master/screenshots/processes_to_file_out.jpg
