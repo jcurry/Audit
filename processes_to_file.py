@@ -5,7 +5,7 @@
 #                       Output gives process name / organizer name and process name
 #                       Output is sorted on organizer and then process name
 # Parameters:		File name for output
-# Updates:
+# Updates:              October 13th, 2014  Sort process organizers based on organizer name
 #
 import sys
 import time
@@ -41,7 +41,8 @@ def traverse(dc, of):
 
 def printTree(dclist, of):
 
-  for po in dclist:
+  newdclist = sorted(dclist, key=lambda p: p.getOrganizerName() )
+  for po in newdclist:
     of.write('Process Organizer %s \n' % (po.getOrganizerName()))
     proclist=[]
     for p in po.osProcessClasses():

@@ -5,7 +5,8 @@
 #                       Output gives organizer name and MIB name
 #                       Output is sorted on organizer and then MIB name
 # Parameters:		File name for output
-# Updates:
+# Updates:              October 13th, 2014  Sort mib organizers based on organizer name
+
 #
 import sys
 import time
@@ -41,7 +42,8 @@ def traverse(dc, of):
 
 def printTree(dclist, of):
 
-  for mo in dclist:
+  newdclist = sorted(dclist, key=lambda p: p.getOrganizerName() )
+  for mo in newdclist:
     of.write('Mib Organizer %s \n' % (mo.getOrganizerName()))
     of.write('    Mibs: ')
     miblist=[]

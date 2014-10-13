@@ -5,7 +5,7 @@
 #                       Output gives device class and device id
 #                       Output is sorted on device class and then device id
 # Parameters:		File name for output
-# Updates:
+# Updates:              October 13th, 2014  Sort process organizers based on organizer name
 #
 import sys
 import time

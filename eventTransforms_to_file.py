@@ -6,6 +6,7 @@
 #                       Output is sorted on event class and then event class transform
 # Parameters:		File name for output
 # Updates:
+# Updates:              October 13th, 2014  Sort mappings better
 #
 import sys
 import time
@@ -56,8 +57,9 @@ def printTree(dclist, of):
     for mi in dc.instances():
       maplist.append(mi)
     # Need to get a sorted list of mappings
-    maplist.sort()
-    for map in maplist:
+    newmaplist = sorted(maplist, key=lambda p: p.id )
+
+    for map in newmaplist:
       if map.transform:
         of.write('Event class %s : Event Class Mapping Transform for %s : \n' % (dc.getOrganizerName(), map.id))
         of.write('%s \n' % (map.transform))

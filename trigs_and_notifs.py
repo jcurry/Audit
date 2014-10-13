@@ -8,7 +8,7 @@
 #                       and shows the use of the trigger uuid from the notification being used to access the
 #                       trigger rule
 # Parameters:           File name for output
-# Updates:
+# Updates:              October 13th 2014.  Explicitly output triggers and notifications
 #
 
 import Globals
@@ -36,7 +36,23 @@ dmd = ZenScriptBase(connect=True, noopts=True).dmd
 from Products.Zuul import getFacade
 facade = getFacade('triggers')
  
+of.write('TRIGGERS \n')
+# get sorted list of triggers
+triglist = []
+for trig in facade.getTriggers():
+    triglist.append(trig)
+newtriglist = sorted(triglist, key=lambda p: str(p['name']))
+
+for trig in newtriglist:
+    of.write(' Trigger name %s    Trigger Rule %s \n ' % (str(trig['name']), str(trig['rule']['source'])))
+
+of.write('\n NOTIFICATIONS \n')
+notiflist = []
 for note in facade.getNotifications():
+    notiflist.append(note)
+newnotiflist = sorted(notiflist, key=lambda p: str(p.name))
+
+for note in newnotiflist:
     rp = ''
     subsname = ''
     subsuuid = ''
@@ -59,8 +75,7 @@ for note in facade.getNotifications():
           subsuuid = subsuuid + str(note.subscriptions[s]['uuid']) + '::'
           # Use the note.subscriptions[s]['uuid'] field to access other data about the trigger
           trig = facade.getTrigger(note.subscriptions[s]['uuid'])
-          substrigrule = substrigrule + str(trig['rule']['source']) + '::'
+          substrigrule = substrigrule + 'Trigger Name: ' + str(trig['name']) + ' :  Trigger rule: ' + str(trig['rule']['source']) + '::'
     except:
       pass
-    of.write('       Name %s  Enabled %s Description %s Delay Secs %s Repeat %s Subscriper Name %s Subscriber UUID %s Subscriber trigger rule %s  \n ' % (str(note.name), str(note.enabled), str(note.description), str(note.delay_seconds), rp,  subsname,  subsuuid, substrigrule))
-    of.write('          Subscriber trigger rule %s \n \n ' % (substrigrule))
+    of.write('       Name %s  Enabled %s Description %s Delay Secs %s Repeat %s Subscriber Name %s Subscriber UUID %s Subscriber trigger rule:  %s  \n ' % (str(note.name), str(note.enabled), str(note.description), str(note.delay_seconds), rp,  subsname,  subsuuid,  substrigrule))
