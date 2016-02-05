@@ -8,12 +8,13 @@
 #                       and shows the use of the trigger uuid from the notification being used to access the
 #                       trigger rule
 # Parameters:           File name for output
-# Updates:              October 13th 2014.  Explicitly output triggers and notifications
+# Updates:
 #
 
 import Globals
 import sys
 import time
+import pprint
 from optparse import OptionParser
 from Products.ZenUtils.ZenScriptBase import ZenScriptBase
 
@@ -36,46 +37,104 @@ dmd = ZenScriptBase(connect=True, noopts=True).dmd
 from Products.Zuul import getFacade
 facade = getFacade('triggers')
  
-of.write('TRIGGERS \n')
+of.write('NOTIFICATION LIST\n\n') 
+of.write('=================\n')
+
+
+# get sorted list of notifications
+notiflist = []
+for note in facade.getNotifications():
+    notiflist.append(note)
+newnotiflist = sorted(notiflist, key=lambda p: str(p.name))
+
+#for note in facade.getNotifications():
+for note in newnotiflist:
+    # Notification is an object
+    # Recipients is a list of user dictionaries where user is
+    #   { label , manage, type, value (UUID), write }
+    recip_string = ''
+    substrigrule = ''
+    try:
+      if len(note.recipients) == 0:
+        recip_string = 'No Users'
+      else:
+        for rp in note.recipients:
+          recip_string = recip_string + rp['label'] + "    "
+    except:
+      pass
+
+    try:
+      # Subscriptions is a list of trigger dictionary links where
+      #    subscriptions is { name, UUID }
+      for s in note.subscriptions:
+        # Use the note.subscriptions[s]['uuid'] field to access other data about the trigger
+        trig = facade.getTrigger(s['uuid'])
+        substrigrule = substrigrule + '    ' + trig['name'] + '  ' + str(trig['rule']['source']) + '\n'
+    except:
+      pass
+    of.write('NOTIFICATION Name %s  Enabled %s Description %s Action %s Delay Secs %s Repeat %s  _guid %s  \n ' % (str(note.name), str(note.enabled), str(note.description), str(note.action), str(note.delay_seconds), str(note.repeat_seconds), str(note._object._guid) ))
+    of.write('Recipients (users)  %s \n' % (recip_string))
+    pprint.pprint(note.recipients, of)
+    of.write('\n')
+    of.write('Subscriptions (ie. Triggers) \n')
+    pprint.pprint(note.subscriptions, of)
+    of.write('\n')
+    #of.write('Subscriber trigger rules %s \n \n ' % (substrigrule))
+    of.write('Subscriber trigger rules \n ')
+    of.write('%s \n\n ' % (substrigrule))
+
 # get sorted list of triggers
 triglist = []
 for trig in facade.getTriggers():
     triglist.append(trig)
 newtriglist = sorted(triglist, key=lambda p: str(p['name']))
 
+of.write('\n\nTRIGGER LIST\n\n') 
+of.write('============\n')
+#for trig in facade.getTriggers():
 for trig in newtriglist:
-    of.write(' Trigger name %s    Trigger Rule %s \n ' % (str(trig['name']), str(trig['rule']['source'])))
+    # trig is a dictionary with
+    #    { name, uuid, enabled, rule, subscriptions, users}
+    #        where rule is a dictionary { api_version, source, type}
+    #        and subscriptions is a list of dictionaries of notifications with
+    #             { delay_seconds, repeat_seconds, send_initial_occurrence, subscriber_uuid, trigger_uuid, uuid }
+    #                where trigger_uuid matches this trigger's uuid field and subscriber_uuid matches notification uuid
+    #        and users is a list of dictionaries of users with
+    #             { label , manage, type, value (UUID), write }
 
-of.write('\n NOTIFICATIONS \n')
-notiflist = []
-for note in facade.getNotifications():
-    notiflist.append(note)
-newnotiflist = sorted(notiflist, key=lambda p: str(p.name))
+    if 'subscriptions' in trig:
+      for n in trig['subscriptions']:
+          # Note that there seem to be old? redundant? subscriptions that still exist
+          # They are the ones whose subscriber_uuid does not match any notification object _guid
+          try:  
+              #of.write(' subscriber_uuid is %s and uuid is %s \n' % (n['subscriber_uuid'], n['uuid']))
+              for n1 in facade.getNotifications():  
+                  if n1._object._guid == n['subscriber_uuid']:
+                      #of.write(' subscriber notification name is %s \n' % (n1._object.id))
+                      n['notif_name'] = n1._object.id
+          except:
+            pass  
 
-for note in newnotiflist:
-    rp = ''
-    subsname = ''
-    subsuuid = ''
-    substrigrule = ''
-    try:
-      if len(note.recipients) == 0:
-        rp = 'NONE'
-      else:
-        for recip in range(0,len(note.recipients)):
-          rp = rp + str(note.recipients[recip]['label']) + '::'
-    except:
-      pass
-
-    try:
-      if len(note.subscriptions) == 0:
-        subsname = 'NONE'
-      else:
-        for s in range(0,len(note.subscriptions)):
-          subsname = subsname + str(note.subscriptions[s]['name']) + '::'
-          subsuuid = subsuuid + str(note.subscriptions[s]['uuid']) + '::'
-          # Use the note.subscriptions[s]['uuid'] field to access other data about the trigger
-          trig = facade.getTrigger(note.subscriptions[s]['uuid'])
-          substrigrule = substrigrule + 'Trigger Name: ' + str(trig['name']) + ' :  Trigger rule: ' + str(trig['rule']['source']) + '::'
-    except:
-      pass
-    of.write('       Name %s  Enabled %s Description %s Delay Secs %s Repeat %s Subscriber Name %s Subscriber UUID %s Subscriber trigger rule:  %s  \n ' % (str(note.name), str(note.enabled), str(note.description), str(note.delay_seconds), rp,  subsname,  subsuuid,  substrigrule))
+    of.write('TRIGGER name is %s  Enabled is %s UUID is %s  \n' % (trig['name'], trig['enabled'], trig['uuid']))
+    if 'rule' in trig:
+      of.write('Trigger rule is \n')
+      pprint.pprint(trig['rule'], of)
+    else:
+      of.write(' No Trigger rules')
+    of.write('\n')
+    if 'subscriptions' in trig:
+      of.write('Subscriptions (ie. Notifications) \n')
+      for n in trig['subscriptions']:
+        if 'notif_name' in n:
+          pprint.pprint(n, of)
+        else:
+          of.write('No notification name for notification subscriber with subscriber_uuid %s \n' % (n['subscriber_uuid']))
+    else:
+      of.write('No Subscriptions (ie. Notifications) ')
+    of.write('\n')
+    if 'users' in trig:
+      of.write('Users  \n')
+      pprint.pprint(trig['users'], of)
+    else:
+      of.write(' No users')
+    of.write('\n\n')
