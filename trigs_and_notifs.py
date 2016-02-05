@@ -8,7 +8,10 @@
 #                       and shows the use of the trigger uuid from the notification being used to access the
 #                       trigger rule
 # Parameters:           File name for output
-# Updates:
+# Updates:              Feb 5th 2016
+#                       Finally sorted out subscription linkages from triggers and notifications
+#                       Note that some triggers appear to have subscribers that don't link back to a name
+#                         through the subscriber_uuid and these pairings do NOT appear in the GUI
 #
 
 import Globals

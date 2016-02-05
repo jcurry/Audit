@@ -1,59 +1,982 @@
-Tue Oct 28 18:15:15 2014
+Fri Feb  5 17:51:12 2016
 
-TRIGGERS 
- Trigger name App    Trigger Rule ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started") 
-  Trigger name App_Cat    Trigger Rule (dev.production_state == 1000) and ("/App" in evt.event_class) and ("DB" in Category) 
-  Trigger name App_Cat_Test    Trigger Rule ("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0) 
-  Trigger name App_TT    Trigger Rule ("/App" in evt.event_class) and (elem.name != "localhost") and ("TTTESTING" in evt.summary) 
-  Trigger name App_zen42    Trigger Rule ("zen42.class" in elem.name) and ("/App" in evt.event_class) 
-  Trigger name Rig_Server_Config_Change    Trigger Rule (evt.event_class == "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity == 4) 
-  Trigger name Rig_down    Trigger Rule (evt.event_class.startswith("/Rig")) and (evt.status == 0) and (evt.severity > 2) 
-  Trigger name Rig_down_test    Trigger Rule (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity > 2) 
-  Trigger name Rig_up    Trigger Rule (evt.status == 0) and (evt.event_class.startswith("/Rig")) and (evt.severity <= 2) 
-  Trigger name Rig_up_test    Trigger Rule (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity <= 2) 
-  Trigger name Skills1_test    Trigger Rule (evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2) and ("jane" in evt.current_user_name) 
-  Trigger name badnews_for_anything    Trigger Rule (evt.status == 0) and ("/Skills/Badnews" in evt.event_class) 
-  Trigger name badnews_trigger_kessthan_suppressed    Trigger Rule (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews") 
-  Trigger name device_class_test    Trigger Rule ("/Server" in dev.device_class) 
-  Trigger name group100r1_trigger    Trigger Rule (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name) 
-  Trigger name groupAndSys    Trigger Rule (dev.production_state == 1000) and (evt.status == 0) and ("aplow" in dev.location) and ("/RMS" in dev.groups) and ("/PLATFORM" in dev.systems) 
-  Trigger name lotschy_cpu_threshold    Trigger Rule ("lotschy" in elem.name) and (evt.event_class == "/Perf/Snmp/load_av_1_based_on_cpus") 
-  Trigger name lotschy_sec_auth    Trigger Rule (elem.name.startswith("lotschy")) and (evt.event_class.startswith("/Security/Auth")) 
-  Trigger name primetime    Trigger Rule (dev.production_state == 1000) and (evt.status == 0) and (evt.severity <= 4) 
-  Trigger name rig_trigger_test    Trigger Rule ("zen42" in elem.name) 
-  Trigger name zen42_badnews_trigger    Trigger Rule (evt.severity == 5) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class == "/Skills/Badnews") 
-  Trigger name zen42_crit_sev_sqlDataSource    Trigger Rule (evt.event_class == "/App/MySQL/zen42_crit_sev_events") 
-  Trigger name zen42_critsev_sql_sh    Trigger Rule (evt.event_class == "/App") and (sub_elem.name == "sql_script_test") and (dev.production_state == 1000) and (evt.status == 0) 
-  Trigger name zen42_su_trigger    Trigger Rule (elem.name.startswith("zen42")) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class.startswith("/Security/Su")) 
-  Trigger name zen42_trigger    Trigger Rule (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills"))) 
+NOTIFICATION LIST
+
+=================
+NOTIFICATION Name App_Cat_Test  Enabled True Description  Action command Delay Secs 0 Repeat 0  _guid 10510b40-fb2a-47d6-8963-81ff48ca5d1c  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'App_Cat_Test', 'uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8'}]
+
+Subscriber trigger rules 
+     App_Cat_Test  ("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0)
  
- NOTIFICATIONS 
-       Name App_Cat_Test  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name App_Cat_Test:: Subscriber UUID 3722e70f-90a4-46c3-a51a-cf53e716c9a8:: Subscriber trigger rule:  Trigger Name: App_Cat_Test :  Trigger rule: ("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0)::  
-        Name App_TT  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name App_TT:: Subscriber UUID 218909b9-20dc-4537-8ba0-3b32dfcfdd29:: Subscriber trigger rule:  Trigger Name: App_TT :  Trigger rule: ("/App" in evt.event_class) and (elem.name != "localhost") and ("TTTESTING" in evt.summary)::  
-        Name MSExchangeISWMTotal16MBFreeBlocks  Enabled False Description  Delay Secs 0 Repeat testgroup (Group)::u4 (User):: Subscriber Name badnews_trigger_kessthan_suppressed::group100r1_trigger:: Subscriber UUID bd2b37a2-3c30-4687-837d-65471b44e324::a7fa85d7-0825-400d-9614-7a7f05af9173:: Subscriber trigger rule:  Trigger Name: badnews_trigger_kessthan_suppressed :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews")::Trigger Name: group100r1_trigger :  Trigger rule: (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)::  
-        Name change_summary_command  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_trigger:: Subscriber UUID 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0:: Subscriber trigger rule:  Trigger Name: zen42_trigger :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))::  
-        Name check_zenoss_env  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_trigger:: Subscriber UUID 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0:: Subscriber trigger rule:  Trigger Name: zen42_trigger :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))::  
-        Name device_class_test_email  Enabled False Description  Delay Secs 0 Repeat MonAPI (User)::jane (User):: Subscriber Name device_class_test:: Subscriber UUID 70406b4d-857b-42a6-913f-c009f62d9410:: Subscriber trigger rule:  Trigger Name: device_class_test :  Trigger rule: ("/Server" in dev.device_class)::  
-        Name forwardgroup100r1ToAWS  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name group100r1_trigger:: Subscriber UUID a7fa85d7-0825-400d-9614-7a7f05af9173:: Subscriber trigger rule:  Trigger Name: group100r1_trigger :  Trigger rule: (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)::  
-        Name group100r1_Notification  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name group100r1_trigger:: Subscriber UUID a7fa85d7-0825-400d-9614-7a7f05af9173:: Subscriber trigger rule:  Trigger Name: group100r1_trigger :  Trigger rule: (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)::  
-        Name group100r1_log  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name group100r1_trigger:: Subscriber UUID a7fa85d7-0825-400d-9614-7a7f05af9173:: Subscriber trigger rule:  Trigger Name: group100r1_trigger :  Trigger rule: (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)::  
-        Name jc2  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name App:: Subscriber UUID 47f21383-3ae4-45a3-9201-86c17b64bb6e:: Subscriber trigger rule:  Trigger Name: App :  Trigger rule: ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")::  
-        Name jc3  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name App:: Subscriber UUID 47f21383-3ae4-45a3-9201-86c17b64bb6e:: Subscriber trigger rule:  Trigger Name: App :  Trigger rule: ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")::  
-        Name lotschy_cpu_threshold_email  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name lotschy_cpu_threshold:: Subscriber UUID 4e20b674-2df8-4302-9cc2-caf99ac82f22:: Subscriber trigger rule:  Trigger Name: lotschy_cpu_threshold :  Trigger rule: ("lotschy" in elem.name) and (evt.event_class == "/Perf/Snmp/load_av_1_based_on_cpus")::  
-        Name lotschy_email_sec_auth  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name lotschy_sec_auth:: Subscriber UUID 6d4c6949-fa00-4fb1-9193-8c1aea2ef956:: Subscriber trigger rule:  Trigger Name: lotschy_sec_auth :  Trigger rule: (elem.name.startswith("lotschy")) and (evt.event_class.startswith("/Security/Auth"))::  
-        Name no_command_status_lessthan_suppressed  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name badnews_trigger_kessthan_suppressed:: Subscriber UUID bd2b37a2-3c30-4687-837d-65471b44e324:: Subscriber trigger rule:  Trigger Name: badnews_trigger_kessthan_suppressed :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews")::  
-        Name primetime_email  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name NONE Subscriber UUID  Subscriber trigger rule:    
-        Name rig_down_command  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name Rig_down:: Subscriber UUID 44443862-7b13-4ede-bac5-a189671173b3:: Subscriber trigger rule:  Trigger Name: Rig_down :  Trigger rule: (evt.event_class.startswith("/Rig")) and (evt.status == 0) and (evt.severity > 2)::  
-        Name rig_down_test_command  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name Rig_down_test:: Subscriber UUID b04dd556-4ca4-47de-a2c7-a6d4c9e39096:: Subscriber trigger rule:  Trigger Name: Rig_down_test :  Trigger rule: (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity > 2)::  
-        Name rig_server_config_change_script  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name Rig_Server_Config_Change:: Subscriber UUID f0f2d00d-4d49-4444-8da8-16f0039bce17:: Subscriber trigger rule:  Trigger Name: Rig_Server_Config_Change :  Trigger rule: (evt.event_class == "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity == 4)::  
-        Name rig_up_command  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name Rig_up:: Subscriber UUID 3452b11e-f1bf-4c5e-bd10-e64faa59b553:: Subscriber trigger rule:  Trigger Name: Rig_up :  Trigger rule: (evt.status == 0) and (evt.event_class.startswith("/Rig")) and (evt.severity <= 2)::  
-        Name rig_up_test_command  Enabled False Description  Delay Secs 0 Repeat NONE Subscriber Name Rig_up_test:: Subscriber UUID 71ec3971-f8f2-4787-b2d3-3fda578cf3da:: Subscriber trigger rule:  Trigger Name: Rig_up_test :  Trigger rule: (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity <= 2)::  
-        Name skills1_test_command  Enabled True Description  Delay Secs 0 Repeat NONE Subscriber Name Skills1_test:: Subscriber UUID 24d4c246-78b9-4f10-9347-6fd47a314619:: Subscriber trigger rule:  Trigger Name: Skills1_test :  Trigger rule: (evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2) and ("jane" in evt.current_user_name)::  
-        Name update_summary_Command  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_trigger:: Subscriber UUID 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0:: Subscriber trigger rule:  Trigger Name: zen42_trigger :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))::  
-        Name zen42_badnews_configged_email  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_badnews_trigger:: Subscriber UUID 85487556-b4eb-41f4-882b-d08c14126912:: Subscriber trigger rule:  Trigger Name: zen42_badnews_trigger :  Trigger rule: (evt.severity == 5) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class == "/Skills/Badnews")::  
-        Name zen42_crit_sev_sqlDataSource_Command  Enabled True Description  Delay Secs 0 Repeat NONE Subscriber Name zen42_crit_sev_sqlDataSource:: Subscriber UUID f5a612de-dd19-41dc-9f6b-ef4739e095c2:: Subscriber trigger rule:  Trigger Name: zen42_crit_sev_sqlDataSource :  Trigger rule: (evt.event_class == "/App/MySQL/zen42_crit_sev_events")::  
-        Name zen42_critsev_sql_sh_email  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_critsev_sql_sh:: Subscriber UUID 2e1aebca-232b-4a13-b587-fc3e6370f32b:: Subscriber trigger rule:  Trigger Name: zen42_critsev_sql_sh :  Trigger rule: (evt.event_class == "/App") and (sub_elem.name == "sql_script_test") and (dev.production_state == 1000) and (evt.status == 0)::  
-        Name zen42_email_traps_su  Enabled True Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_trigger:: Subscriber UUID 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0:: Subscriber trigger rule:  Trigger Name: zen42_trigger :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))::  
-        Name zen42_page  Enabled False Description  Delay Secs 0 Repeat jane (User):: Subscriber Name zen42_trigger:: Subscriber UUID 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0:: Subscriber trigger rule:  Trigger Name: zen42_trigger :  Trigger rule: (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))::  
-        Name zen42_trap  Enabled True Description  Delay Secs 0 Repeat NONE Subscriber Name zen42_su_trigger:: Subscriber UUID 1db2fdee-b0e8-484b-ad52-a537b80f790f:: Subscriber trigger rule:  Trigger Name: zen42_su_trigger :  Trigger rule: (elem.name.startswith("zen42")) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class.startswith("/Security/Su"))::  
+
+ NOTIFICATION Name Important_File_Dir_Email  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 45b85f59-9d6a-4eba-a4b4-66d5393e6403  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'File_test', 'uuid': u'26272be5-754e-47f1-90b3-b2d36737adb8'},
+ {'name': u'Important_File_Dir',
+  'uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92'}]
+
+Subscriber trigger rules 
+     File_test  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))
+    Important_File_Dir  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))
  
+
+ NOTIFICATION Name MSExchangeISWMTotal16MBFreeBlocks  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 20e85815-f96a-4538-9270-065a40c2b1e6  
+ Recipients (users)  testgroup (Group)    u4 (User)     
+[{'label': 'testgroup (Group)',
+  'manage': False,
+  'type': 'group',
+  'value': 'f6fc5495-e07c-491e-b49c-cc08b5d77bb2',
+  'write': False},
+ {'label': 'u4 (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '419da56e-4502-4ac6-b86c-e29d16353bdf',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'badnews_trigger_kessthan_suppressed',
+  'uuid': u'bd2b37a2-3c30-4687-837d-65471b44e324'},
+ {'name': u'group100r1_trigger',
+  'uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173'}]
+
+Subscriber trigger rules 
+     badnews_trigger_kessthan_suppressed  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews")
+    group100r1_trigger  (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)
+ 
+
+ NOTIFICATION Name change_summary_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 7dab0954-75cc-4d1b-9672-ec2ae7ecf41b  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_trigger', 'uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0'}]
+
+Subscriber trigger rules 
+     zen42_trigger  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))
+ 
+
+ NOTIFICATION Name check_zenoss_env  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 41de0a3c-6e98-4921-b168-4529929fadc4  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_trigger', 'uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0'}]
+
+Subscriber trigger rules 
+     zen42_trigger  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))
+ 
+
+ NOTIFICATION Name device_class_test_email  Enabled False Description  Action email Delay Secs 0 Repeat 0  _guid de0cb4c7-a06b-4108-ae42-a01b689efda7  
+ Recipients (users)  MonAPI (User)    jane (User)     
+[{'label': 'MonAPI (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '000a1107-f42f-406b-9e9b-7d0401540e68',
+  'write': False},
+ {'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'device_class_test',
+  'uuid': u'70406b4d-857b-42a6-913f-c009f62d9410'}]
+
+Subscriber trigger rules 
+     device_class_test  ("/Server" in dev.device_class)
+ 
+
+ NOTIFICATION Name forwardgroup100r1ToAWS  Enabled False Description  Action eventForwarderAction Delay Secs 0 Repeat 0  _guid d2bf58d6-23b6-4182-b5a7-9cfdded059bc  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'group100r1_trigger',
+  'uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173'}]
+
+Subscriber trigger rules 
+     group100r1_trigger  (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)
+ 
+
+ NOTIFICATION Name group100r1_Notification  Enabled False Description  Action email Delay Secs 0 Repeat 0  _guid 9a19f12b-9cdf-4dd2-b99c-b002ff037d49  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': True,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': True}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'group100r1_trigger',
+  'uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173'}]
+
+Subscriber trigger rules 
+     group100r1_trigger  (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)
+ 
+
+ NOTIFICATION Name group100r1_log  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid dc250641-4f57-4173-9ee6-f0b3f6b36d6b  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'group100r1_trigger',
+  'uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173'}]
+
+Subscriber trigger rules 
+     group100r1_trigger  (evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)
+ 
+
+ NOTIFICATION Name jc1  Enabled False Description  Action Htmlemail Delay Secs 0 Repeat 0  _guid 6f370a76-f6ec-4061-84ae-8021e5ed14f7  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'App', 'uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e'}]
+
+Subscriber trigger rules 
+     App  ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")
+ 
+
+ NOTIFICATION Name jc2  Enabled True Description  Action fancyemail Delay Secs 0 Repeat 0  _guid f7f321c7-7279-4f88-ab33-5395fa39bd5c  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'App', 'uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e'}]
+
+Subscriber trigger rules 
+     App  ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")
+ 
+
+ NOTIFICATION Name lotschy_cpu_threshold_email  Enabled False Description  Action email Delay Secs 0 Repeat 0  _guid 5413956f-a20f-47dd-85b3-60fa7c8434fa  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'lotschy_cpu_threshold',
+  'uuid': u'4e20b674-2df8-4302-9cc2-caf99ac82f22'}]
+
+Subscriber trigger rules 
+     lotschy_cpu_threshold  ("lotschy" in elem.name) and (evt.event_class == "/Perf/Snmp/load_av_1_based_on_cpus")
+ 
+
+ NOTIFICATION Name lotschy_email_sec_auth  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 61da0eff-f34f-471f-93ce-3b5b90d4ede0  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'lotschy_sec_auth',
+  'uuid': u'6d4c6949-fa00-4fb1-9193-8c1aea2ef956'}]
+
+Subscriber trigger rules 
+     lotschy_sec_auth  (elem.name.startswith("lotschy")) and (evt.event_class.startswith("/Security/Auth"))
+ 
+
+ NOTIFICATION Name no_command_status_lessthan_suppressed  Enabled True Description  Action command Delay Secs 0 Repeat 0  _guid 1416d023-2ff7-48d7-897f-ab87606add4c  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'badnews_trigger_kessthan_suppressed',
+  'uuid': u'bd2b37a2-3c30-4687-837d-65471b44e324'}]
+
+Subscriber trigger rules 
+     badnews_trigger_kessthan_suppressed  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews")
+ 
+
+ NOTIFICATION Name primetime_email  Enabled False Description  Action email Delay Secs 0 Repeat 0  _guid 7dda0dd5-0fdc-463e-9db6-890513476b66  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[]
+
+Subscriber trigger rules 
+  
+
+ NOTIFICATION Name rig_down_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid a1c22fdb-c34e-4228-9e6f-f250b437756e  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Rig_down', 'uuid': u'44443862-7b13-4ede-bac5-a189671173b3'}]
+
+Subscriber trigger rules 
+     Rig_down  (evt.event_class.startswith("/Rig")) and (evt.status == 0) and (evt.severity > 2)
+ 
+
+ NOTIFICATION Name rig_down_test_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 0445fb10-9f96-4f51-bc15-c25e30de3faa  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Rig_down_test', 'uuid': u'b04dd556-4ca4-47de-a2c7-a6d4c9e39096'}]
+
+Subscriber trigger rules 
+     Rig_down_test  (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity > 2)
+ 
+
+ NOTIFICATION Name rig_server_config_change_script  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid c1bac0e3-a423-4fe5-907b-31d3e33b9d7e  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Rig_Server_Config_Change',
+  'uuid': u'f0f2d00d-4d49-4444-8da8-16f0039bce17'}]
+
+Subscriber trigger rules 
+     Rig_Server_Config_Change  (evt.event_class == "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity == 4)
+ 
+
+ NOTIFICATION Name rig_up_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid c8f7688b-9dd0-4f4d-a84a-747276a27b0e  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Rig_up', 'uuid': u'3452b11e-f1bf-4c5e-bd10-e64faa59b553'}]
+
+Subscriber trigger rules 
+     Rig_up  (evt.status == 0) and (evt.event_class.startswith("/Rig")) and (evt.severity <= 2)
+ 
+
+ NOTIFICATION Name rig_up_test_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 18e81b7a-d5b2-461a-a1e2-e4f3a216dfb2  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Rig_up_test', 'uuid': u'71ec3971-f8f2-4787-b2d3-3fda578cf3da'}]
+
+Subscriber trigger rules 
+     Rig_up_test  (evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity <= 2)
+ 
+
+ NOTIFICATION Name simple_test  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 0d4e3018-82d4-4a19-a6d0-88750102d5a5  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Skills1_test', 'uuid': u'24d4c246-78b9-4f10-9347-6fd47a314619'}]
+
+Subscriber trigger rules 
+     Skills1_test  (evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2) and ("/Real" in dev.systems)
+ 
+
+ NOTIFICATION Name skills1_test_command  Enabled True Description  Action command Delay Secs 0 Repeat 0  _guid 5a748abc-5ab2-4149-af56-1a4d7c6063eb  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'Skills1_test', 'uuid': u'24d4c246-78b9-4f10-9347-6fd47a314619'}]
+
+Subscriber trigger rules 
+     Skills1_test  (evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2) and ("/Real" in dev.systems)
+ 
+
+ NOTIFICATION Name update_summary_Command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid dbe7edc0-2f52-48ce-90f1-d83ef4190a68  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_trigger', 'uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0'}]
+
+Subscriber trigger rules 
+     zen42_trigger  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))
+ 
+
+ NOTIFICATION Name zen42_badnews_configged_email  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 477b482e-1c01-43ad-af85-bebb52f372ee  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_badnews_trigger',
+  'uuid': u'85487556-b4eb-41f4-882b-d08c14126912'}]
+
+Subscriber trigger rules 
+     zen42_badnews_trigger  (evt.severity == 5) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class == "/Skills/Badnews")
+ 
+
+ NOTIFICATION Name zen42_crit_sev_sqlDataSource_Command  Enabled True Description  Action command Delay Secs 0 Repeat 0  _guid 8c0cf8f4-575c-4727-9bdd-c24d149743d6  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_crit_sev_sqlDataSource',
+  'uuid': u'f5a612de-dd19-41dc-9f6b-ef4739e095c2'}]
+
+Subscriber trigger rules 
+     zen42_crit_sev_sqlDataSource  (evt.event_class == "/App/MySQL/zen42_crit_sev_events")
+ 
+
+ NOTIFICATION Name zen42_critsev_sql_sh_email  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 8928d10f-000d-4c06-8386-8acc344821d2  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_critsev_sql_sh',
+  'uuid': u'2e1aebca-232b-4a13-b587-fc3e6370f32b'}]
+
+Subscriber trigger rules 
+     zen42_critsev_sql_sh  (evt.event_class == "/App") and (sub_elem.name == "sql_script_test") and (dev.production_state == 1000) and (evt.status == 0)
+ 
+
+ NOTIFICATION Name zen42_email_traps_su  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 5ff53c4e-17bb-4715-ace7-19d72289e2ee  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_trigger', 'uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0'}]
+
+Subscriber trigger rules 
+     zen42_trigger  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))
+ 
+
+ NOTIFICATION Name zen42_page  Enabled False Description  Action page Delay Secs 0 Repeat 0  _guid c8c386d1-8dcc-4515-95c1-6ef6f4333f62  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_trigger', 'uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0'}]
+
+Subscriber trigger rules 
+     zen42_trigger  (dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))
+ 
+
+ NOTIFICATION Name zen42_trap  Enabled True Description  Action trap Delay Secs 0 Repeat 0  _guid b91d92e1-a70e-4d81-891a-d66f30fc5e76  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'zen42_su_trigger',
+  'uuid': u'1db2fdee-b0e8-484b-ad52-a537b80f790f'}]
+
+Subscriber trigger rules 
+     zen42_su_trigger  (elem.name.startswith("zen42")) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class.startswith("/Security/Su"))
+ 
+
+ 
+
+TRIGGER LIST
+
+============
+TRIGGER name is App  Enabled is True UUID is 47f21383-3ae4-45a3-9201-86c17b64bb6e  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 06710481-2129-4085-a279-04258d8570fc 
+No notification name for notification subscriber with subscriber_uuid 48bf1d5e-1f7b-4872-9c3b-8d0a39213f31 
+No notification name for notification subscriber with subscriber_uuid 4c037dd5-8c8f-4d55-8b6f-8d54fce1b0d9 
+No notification name for notification subscriber with subscriber_uuid 649dd6db-32e0-469c-a058-730b916bc827 
+{'delay_seconds': 0,
+ 'notif_name': 'jc1',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'6f370a76-f6ec-4061-84ae-8021e5ed14f7',
+ 'trigger_uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e',
+ 'uuid': u'000c2928-6eff-9270-11e4-5520b53d5f28'}
+No notification name for notification subscriber with subscriber_uuid 730b229e-a37f-465f-8461-d74b48a96862 
+No notification name for notification subscriber with subscriber_uuid 7d30c755-d7e3-48cf-b63c-934e53fed4fb 
+No notification name for notification subscriber with subscriber_uuid 81c8976c-8b34-4434-a5b0-7961206df9ea 
+No notification name for notification subscriber with subscriber_uuid 83068cb3-d055-461d-bef7-220d71fd8718 
+No notification name for notification subscriber with subscriber_uuid 8918801c-4b01-4139-bfa7-d883d51294a1 
+No notification name for notification subscriber with subscriber_uuid 8fe048b9-6d75-44cc-bd24-5c03531d4d93 
+No notification name for notification subscriber with subscriber_uuid c85acfc3-46eb-4452-8782-b3f01a2aba06 
+No notification name for notification subscriber with subscriber_uuid eec587be-6231-41ae-88e4-7a7e3f5d39c4 
+{'delay_seconds': 0,
+ 'notif_name': 'jc2',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'f7f321c7-7279-4f88-ab33-5395fa39bd5c',
+ 'trigger_uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e',
+ 'uuid': u'000c2928-6eff-a682-11e4-6fc69ef8ca34'}
+
+Users  
+[]
+
+
+TRIGGER name is App_Cat  Enabled is False UUID is c39b1a56-328b-437d-a084-12050b42fd79  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and ("/App" in evt.event_class) and ("DB" in Category)',
+ 'type': 1}
+
+No Subscriptions (ie. Notifications) 
+Users  
+[]
+
+
+TRIGGER name is App_Cat_Test  Enabled is True UUID is 3722e70f-90a4-46c3-a51a-cf53e716c9a8  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'App_Cat_Test',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'10510b40-fb2a-47d6-8963-81ff48ca5d1c',
+ 'trigger_uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8',
+ 'uuid': u'000c2928-6eff-9270-11e4-5537986add93'}
+
+Users  
+[]
+
+
+TRIGGER name is App_zen42  Enabled is True UUID is 6f53b7cf-991f-4037-a01e-6fd6d6e5ff41  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'("zen42.class" in elem.name) and ("/App" in evt.event_class)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 16267820-d96e-49f4-8ac0-ae590b6c24cb 
+No notification name for notification subscriber with subscriber_uuid 6b470274-52b3-4159-851e-a4b036fc4c3b 
+No notification name for notification subscriber with subscriber_uuid b277927c-ec4b-4545-ab3f-9f07ed2298e9 
+No notification name for notification subscriber with subscriber_uuid dd410baf-ac8a-4b51-b333-b07a2748a6e8 
+No notification name for notification subscriber with subscriber_uuid fa8c8d79-6731-43a4-b267-e14379977be0 
+No notification name for notification subscriber with subscriber_uuid fc6a07e8-bdd8-4d44-b40d-537a471be98c 
+
+Users  
+[]
+
+
+TRIGGER name is File_test  Enabled is False UUID is 26272be5-754e-47f1-90b3-b2d36737adb8  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'Important_File_Dir_Email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'45b85f59-9d6a-4eba-a4b4-66d5393e6403',
+ 'trigger_uuid': u'26272be5-754e-47f1-90b3-b2d36737adb8',
+ 'uuid': u'000c29b5-8a24-9a73-11e5-cbe7ccb5f9b9'}
+
+Users  
+[]
+
+
+TRIGGER name is Important_File_Dir  Enabled is False UUID is 4e3e0260-9f80-412b-989c-d23c26875c92  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'Important_File_Dir_Email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'45b85f59-9d6a-4eba-a4b4-66d5393e6403',
+ 'trigger_uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92',
+ 'uuid': u'000c29b5-8a24-9a73-11e5-cbe9031dc850'}
+
+Users  
+[]
+
+
+TRIGGER name is Rig_Server_Config_Change  Enabled is True UUID is f0f2d00d-4d49-4444-8da8-16f0039bce17  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class == "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity == 4)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid a6cd06bf-a5ee-4902-bb35-a8ae9456ad50 
+{'delay_seconds': 0,
+ 'notif_name': 'rig_server_config_change_script',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'c1bac0e3-a423-4fe5-907b-31d3e33b9d7e',
+ 'trigger_uuid': u'f0f2d00d-4d49-4444-8da8-16f0039bce17',
+ 'uuid': u'000c29d9-f87b-bd93-11e3-8da8aea6dd55'}
+
+Users  
+[]
+
+
+TRIGGER name is Rig_down  Enabled is False UUID is 44443862-7b13-4ede-bac5-a189671173b3  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class.startswith("/Rig")) and (evt.status == 0) and (evt.severity > 2)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'rig_down_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': False,
+ 'subscriber_uuid': u'a1c22fdb-c34e-4228-9e6f-f250b437756e',
+ 'trigger_uuid': u'44443862-7b13-4ede-bac5-a189671173b3',
+ 'uuid': u'000c29d9-f87b-bf5d-11e3-212d207e74a5'}
+
+Users  
+[]
+
+
+TRIGGER name is Rig_down_test  Enabled is True UUID is b04dd556-4ca4-47de-a2c7-a6d4c9e39096  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity > 2)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'rig_down_test_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': False,
+ 'subscriber_uuid': u'0445fb10-9f96-4f51-bc15-c25e30de3faa',
+ 'trigger_uuid': u'b04dd556-4ca4-47de-a2c7-a6d4c9e39096',
+ 'uuid': u'000c29d9-f87b-a649-11e3-2b8f723aca72'}
+
+Users  
+[]
+
+
+TRIGGER name is Rig_up  Enabled is False UUID is 3452b11e-f1bf-4c5e-bd10-e64faa59b553  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.status == 0) and (evt.event_class.startswith("/Rig")) and (evt.severity <= 2)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'rig_up_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': False,
+ 'subscriber_uuid': u'c8f7688b-9dd0-4f4d-a84a-747276a27b0e',
+ 'trigger_uuid': u'3452b11e-f1bf-4c5e-bd10-e64faa59b553',
+ 'uuid': u'000c29d9-f87b-bf5d-11e3-215870db5e04'}
+
+Users  
+[]
+
+
+TRIGGER name is Rig_up_test  Enabled is True UUID is 71ec3971-f8f2-4787-b2d3-3fda578cf3da  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class.startswith("/Rig")) and (evt.event_class != "/Rig/Error") and (evt.event_class != "/Rig/Server_Config_Change") and (evt.status == 0) and (evt.severity <= 2)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'rig_up_test_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': False,
+ 'subscriber_uuid': u'18e81b7a-d5b2-461a-a1e2-e4f3a216dfb2',
+ 'trigger_uuid': u'71ec3971-f8f2-4787-b2d3-3fda578cf3da',
+ 'uuid': u'000c29d9-f87b-a649-11e3-2b92a933552e'}
+
+Users  
+[]
+
+
+TRIGGER name is Skills1_email_test  Enabled is True UUID is aff4d854-5839-4390-99f7-36cd7fe7ad57  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 501bfc59-9bb0-4b96-a635-5ccd44102e32 
+
+Users  
+[]
+
+
+TRIGGER name is Skills1_test  Enabled is True UUID is 24d4c246-78b9-4f10-9347-6fd47a314619  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class.startswith("/Test")) and (evt.status == 0) and (evt.severity > 2) and ("/Real" in dev.systems)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'simple_test',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'0d4e3018-82d4-4a19-a6d0-88750102d5a5',
+ 'trigger_uuid': u'24d4c246-78b9-4f10-9347-6fd47a314619',
+ 'uuid': u'000c29b5-8a24-981c-11e5-66e2627b071a'}
+{'delay_seconds': 0,
+ 'notif_name': 'skills1_test_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': False,
+ 'subscriber_uuid': u'5a748abc-5ab2-4149-af56-1a4d7c6063eb',
+ 'trigger_uuid': u'24d4c246-78b9-4f10-9347-6fd47a314619',
+ 'uuid': u'000c29d9-f87b-ab2f-11e3-da6d693e2ed7'}
+
+Users  
+[]
+
+
+TRIGGER name is badnews_for_anything  Enabled is True UUID is 017e8c69-e980-49d5-8e90-534adef9464a  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.status == 0) and ("/Skills/Badnews" in evt.event_class)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid bf07a793-2a9b-419f-8543-d69fb39daebe 
+
+Users  
+[]
+
+
+TRIGGER name is badnews_trigger_kessthan_suppressed  Enabled is True UUID is bd2b37a2-3c30-4687-837d-65471b44e324  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 3) and (evt.status < 2) and (evt.event_class == "/Skills/Badnews")',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'no_command_status_lessthan_suppressed',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'1416d023-2ff7-48d7-897f-ab87606add4c',
+ 'trigger_uuid': u'bd2b37a2-3c30-4687-837d-65471b44e324',
+ 'uuid': u'000c29d9-f87b-a2e6-11e2-d2b4d9cb94bf'}
+{'delay_seconds': 0,
+ 'notif_name': 'MSExchangeISWMTotal16MBFreeBlocks',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'20e85815-f96a-4538-9270-065a40c2b1e6',
+ 'trigger_uuid': u'bd2b37a2-3c30-4687-837d-65471b44e324',
+ 'uuid': u'000c29d9-f87b-9eea-11e2-d8324c74bf9e'}
+
+Users  
+[]
+
+
+TRIGGER name is device_class_test  Enabled is True UUID is 70406b4d-857b-42a6-913f-c009f62d9410  
+Trigger rule is 
+{'api_version': 1, 'source': u'("/Server" in dev.device_class)', 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 63db6b1b-c0f4-4440-8d46-717751923582 
+No notification name for notification subscriber with subscriber_uuid 7bcfcec8-f799-4a6f-bad8-6fa0d5d2533d 
+No notification name for notification subscriber with subscriber_uuid 95c40d7c-c9d7-4f35-8ad4-96cd89bf1169 
+No notification name for notification subscriber with subscriber_uuid abddbdf0-67c6-4d31-9567-bf187afa48f2 
+No notification name for notification subscriber with subscriber_uuid dc9d9a8c-4e5e-497e-a2d7-13ba00979aba 
+No notification name for notification subscriber with subscriber_uuid dd1c2817-b842-41f7-ac67-6ca2eaf746ae 
+{'delay_seconds': 0,
+ 'notif_name': 'device_class_test_email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'de0cb4c7-a06b-4108-ae42-a01b689efda7',
+ 'trigger_uuid': u'70406b4d-857b-42a6-913f-c009f62d9410',
+ 'uuid': u'000c29d9-f87b-80e6-11e3-f6f7e1bcab26'}
+No notification name for notification subscriber with subscriber_uuid dec94ae4-0913-4481-bf69-9db640e433fe 
+
+Users  
+[]
+
+
+TRIGGER name is group100r1_trigger  Enabled is True UUID is a7fa85d7-0825-400d-9614-7a7f05af9173  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.status >= 0) and (dev.production_state >= 300) and (evt.severity >= 0) and ("group-100-r1" in elem.name)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'MSExchangeISWMTotal16MBFreeBlocks',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'20e85815-f96a-4538-9270-065a40c2b1e6',
+ 'trigger_uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173',
+ 'uuid': u'000c29d9-f87b-9eea-11e2-d8324c74bf9d'}
+{'delay_seconds': 0,
+ 'notif_name': 'group100r1_Notification',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'9a19f12b-9cdf-4dd2-b99c-b002ff037d49',
+ 'trigger_uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173',
+ 'uuid': u'000c29d9-f87b-a71f-11e1-fd04e32589f2'}
+{'delay_seconds': 0,
+ 'notif_name': 'forwardgroup100r1ToAWS',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'd2bf58d6-23b6-4182-b5a7-9cfdded059bc',
+ 'trigger_uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173',
+ 'uuid': u'000c29d9-f87b-bef6-11e2-ea4ab3d3ae75'}
+{'delay_seconds': 0,
+ 'notif_name': 'group100r1_log',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'dc250641-4f57-4173-9ee6-f0b3f6b36d6b',
+ 'trigger_uuid': u'a7fa85d7-0825-400d-9614-7a7f05af9173',
+ 'uuid': u'000c29d9-f87b-ba07-11e2-43797918ac7c'}
+
+Users  
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+
+TRIGGER name is lotschy_cpu_threshold  Enabled is True UUID is 4e20b674-2df8-4302-9cc2-caf99ac82f22  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'("lotschy" in elem.name) and (evt.event_class == "/Perf/Snmp/load_av_1_based_on_cpus")',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'lotschy_cpu_threshold_email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'5413956f-a20f-47dd-85b3-60fa7c8434fa',
+ 'trigger_uuid': u'4e20b674-2df8-4302-9cc2-caf99ac82f22',
+ 'uuid': u'000c29d9-f87b-b7bf-11e3-1ecc9b7def26'}
+
+Users  
+[]
+
+
+TRIGGER name is lotschy_sec_auth  Enabled is True UUID is 6d4c6949-fa00-4fb1-9193-8c1aea2ef956  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(elem.name.startswith("lotschy")) and (evt.event_class.startswith("/Security/Auth"))',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'lotschy_email_sec_auth',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'61da0eff-f34f-471f-93ce-3b5b90d4ede0',
+ 'trigger_uuid': u'6d4c6949-fa00-4fb1-9193-8c1aea2ef956',
+ 'uuid': u'000c29d9-f87b-81d8-11e2-566b71f643b1'}
+
+Users  
+[]
+
+
+TRIGGER name is primetime  Enabled is True UUID is 9e6884ec-53e6-45bd-9ffb-8e503e91ad60  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.status == 0) and (evt.severity <= 4)',
+ 'type': 1}
+
+No Subscriptions (ie. Notifications) 
+Users  
+[]
+
+
+TRIGGER name is rig_trigger_test  Enabled is True UUID is c482d173-6e76-48e6-a510-9af5fe9d2c7c  
+Trigger rule is 
+{'api_version': 1, 'source': u'("zen42" in elem.name)', 'type': 1}
+
+No Subscriptions (ie. Notifications) 
+Users  
+[]
+
+
+TRIGGER name is test  Enabled is True UUID is 71b42f23-beae-42ea-8eda-febce01e09a2  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 4)',
+ 'type': 1}
+
+No Subscriptions (ie. Notifications) 
+Users  
+[]
+
+
+TRIGGER name is zen42_badnews_trigger  Enabled is True UUID is 85487556-b4eb-41f4-882b-d08c14126912  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.severity == 5) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class == "/Skills/Badnews")',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_badnews_configged_email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'477b482e-1c01-43ad-af85-bebb52f372ee',
+ 'trigger_uuid': u'85487556-b4eb-41f4-882b-d08c14126912',
+ 'uuid': u'000c29d9-f87b-b9e4-11e3-1478c989823f'}
+
+Users  
+[]
+
+
+TRIGGER name is zen42_crit_sev_sqlDataSource  Enabled is True UUID is f5a612de-dd19-41dc-9f6b-ef4739e095c2  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class == "/App/MySQL/zen42_crit_sev_events")',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_crit_sev_sqlDataSource_Command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'8c0cf8f4-575c-4727-9bdd-c24d149743d6',
+ 'trigger_uuid': u'f5a612de-dd19-41dc-9f6b-ef4739e095c2',
+ 'uuid': u'000c29d9-f87b-a653-11e2-e478a50ee051'}
+
+Users  
+[]
+
+
+TRIGGER name is zen42_critsev_sql_sh  Enabled is True UUID is 2e1aebca-232b-4a13-b587-fc3e6370f32b  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(evt.event_class == "/App") and (sub_elem.name == "sql_script_test") and (dev.production_state == 1000) and (evt.status == 0)',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_critsev_sql_sh_email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'8928d10f-000d-4c06-8386-8acc344821d2',
+ 'trigger_uuid': u'2e1aebca-232b-4a13-b587-fc3e6370f32b',
+ 'uuid': u'000c29d9-f87b-85c9-11e2-e8747872dd4d'}
+
+Users  
+[]
+
+
+TRIGGER name is zen42_su_trigger  Enabled is True UUID is 1db2fdee-b0e8-484b-ad52-a537b80f790f  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(elem.name.startswith("zen42")) and (dev.production_state == 1000) and (evt.status == 0) and (evt.event_class.startswith("/Security/Su"))',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 85db070d-347b-4ecf-8513-f5b87b49e24b 
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_trap',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'b91d92e1-a70e-4d81-891a-d66f30fc5e76',
+ 'trigger_uuid': u'1db2fdee-b0e8-484b-ad52-a537b80f790f',
+ 'uuid': u'000c29d9-f87b-8651-11e2-54c1d52e9fb2'}
+
+Users  
+[]
+
+
+TRIGGER name is zen42_trigger  Enabled is True UUID is 2c76ea02-9f18-4160-a8d0-4ddb6f0431d0  
+Trigger rule is 
+{'api_version': 1,
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 3) and (evt.status == 0) and ("Event aging task aged out the event" not in evt.summary) and ((evt.event_class.startswith("/Security/Su")) or (evt.event_class.startswith("/Skills")))',
+ 'type': 1}
+
+Subscriptions (ie. Notifications) 
+No notification name for notification subscriber with subscriber_uuid 336bb7bf-864b-4f8d-9d22-ddd26954042c 
+{'delay_seconds': 0,
+ 'notif_name': 'check_zenoss_env',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'41de0a3c-6e98-4921-b168-4529929fadc4',
+ 'trigger_uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0',
+ 'uuid': u'000c29d9-f87b-8309-11e2-a2c069a35af1'}
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_email_traps_su',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'5ff53c4e-17bb-4715-ace7-19d72289e2ee',
+ 'trigger_uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0',
+ 'uuid': u'000c29d9-f87b-8651-11e2-532af543f798'}
+{'delay_seconds': 0,
+ 'notif_name': 'change_summary_command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'7dab0954-75cc-4d1b-9672-ec2ae7ecf41b',
+ 'trigger_uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0',
+ 'uuid': u'000c29d9-f87b-8309-11e2-a2acb420f7ae'}
+No notification name for notification subscriber with subscriber_uuid a6c14f56-8f54-4ede-b658-8ed38b8774bd 
+{'delay_seconds': 0,
+ 'notif_name': 'zen42_page',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'c8c386d1-8dcc-4515-95c1-6ef6f4333f62',
+ 'trigger_uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0',
+ 'uuid': u'000c29d9-f87b-a540-11e2-6677fab14929'}
+{'delay_seconds': 0,
+ 'notif_name': 'update_summary_Command',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'dbe7edc0-2f52-48ce-90f1-d83ef4190a68',
+ 'trigger_uuid': u'2c76ea02-9f18-4160-a8d0-4ddb6f0431d0',
+ 'uuid': u'000c29d9-f87b-8309-11e2-a5f97e1ebec5'}
+
+Users  
+[]
+
+
