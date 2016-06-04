@@ -1,0 +1,12 @@
+Sat Jun  4 14:43:53 2016
+
+Device Id elk.ourshack.com 	 Device Title elk.ourshack.com 	 Local Device templates LDAPMonitor Local Device template path /Devices/Server/Linux/devices/elk.ourshack.com 
+Device Id kea.ourshack.com 	 Device Title kea.ourshack.com 	 Local Device templates LDAPMonitor Local Device template path /Devices/Server/Linux/devices/kea.ourshack.com 
+	 	 Device id rb2011.skills-1st.co.uk 	 Interface Id bridge-local 	  Local Device Interface template ethernetCsmacd_64 	 Local Device Interface template path /Devices/Network/Router/devices/rb2011.skills-1st.co.uk/os/interfaces/bridge-local 
+	 	 Device id rb2011.skills-1st.co.uk 	 Interface Id ether5 	  Local Device Interface template ethernetCsmacd_64 	 Local Device Interface template path /Devices/Network/Router/devices/rb2011.skills-1st.co.uk/os/interfaces/ether5 
+	 	 Device id rb2011.skills-1st.co.uk 	 Interface Id ether7-slave-local 	  Local Device Interface template ethernetCsmacd_64 	 Local Device Interface template path /Devices/Network/Router/devices/rb2011.skills-1st.co.uk/os/interfaces/ether7-slave-local 
+Device Id zen42.class.example.org 	 Device Title zen42.class.example.org 	 Local Device templates SqlDatasourceTest1 Local Device template path /Devices/Server/Linux/devices/zen42.class.example.org 
+Device Id zen42.class.example.org 	 Device Title zen42.class.example.org 	 Local Device templates test1 Local Device template path /Devices/Server/Linux/devices/zen42.class.example.org 
+	 Device id zen42.class.example.org 	 FileSystem Id / 	  Local Device Filesystem template FileSystem 	 Local Device Filesystem template path /Devices/Server/Linux/devices/zen42.class.example.org/os/filesystems/- 
+	 Device id zen42.class.example.org 	 FileSystem Id /boot 	  Local Device Filesystem template FileSystem 	 Local Device Filesystem template path /Devices/Server/Linux/devices/zen42.class.example.org/os/filesystems/boot 
+	 	 Device id zen42.class.example.org 	 Interface Id eth0 	  Local Device Interface template ethernetCsmacd_64 	 Local Device Interface template path /Devices/Server/Linux/devices/zen42.class.example.org/os/interfaces/eth0 

@@ -50,11 +50,11 @@ for note in facade.getNotifications():
     notiflist.append(note)
 newnotiflist = sorted(notiflist, key=lambda p: str(p.name))
 
-#for note in facade.getNotifications():
 for note in newnotiflist:
     # Notification is an object
     # Recipients is a list of user dictionaries where user is
     #   { label , manage, type, value (UUID), write }
+    # Deliver a list of user / group names
     recip_string = ''
     substrigrule = ''
     try:
@@ -71,10 +71,12 @@ for note in newnotiflist:
       #    subscriptions is { name, UUID }
       for s in note.subscriptions:
         # Use the note.subscriptions[s]['uuid'] field to access other data about the trigger
+        # Deliver a string with all the trigger rules
         trig = facade.getTrigger(s['uuid'])
         substrigrule = substrigrule + '    ' + trig['name'] + '  ' + str(trig['rule']['source']) + '\n'
     except:
       pass
+    # The _guid field is what needs to marry up with the subscriber_uuid in the trigger['subscriptions']
     of.write('NOTIFICATION Name %s  Enabled %s Description %s Action %s Delay Secs %s Repeat %s  _guid %s  \n ' % (str(note.name), str(note.enabled), str(note.description), str(note.action), str(note.delay_seconds), str(note.repeat_seconds), str(note._object._guid) ))
     of.write('Recipients (users)  %s \n' % (recip_string))
     pprint.pprint(note.recipients, of)
@@ -82,7 +84,6 @@ for note in newnotiflist:
     of.write('Subscriptions (ie. Triggers) \n')
     pprint.pprint(note.subscriptions, of)
     of.write('\n')
-    #of.write('Subscriber trigger rules %s \n \n ' % (substrigrule))
     of.write('Subscriber trigger rules \n ')
     of.write('%s \n\n ' % (substrigrule))
 
@@ -94,19 +95,19 @@ newtriglist = sorted(triglist, key=lambda p: str(p['name']))
 
 of.write('\n\nTRIGGER LIST\n\n') 
 of.write('============\n')
-#for trig in facade.getTriggers():
 for trig in newtriglist:
     # trig is a dictionary with
     #    { name, uuid, enabled, rule, subscriptions, users}
     #        where rule is a dictionary { api_version, source, type}
     #        and subscriptions is a list of dictionaries of notifications with
     #             { delay_seconds, repeat_seconds, send_initial_occurrence, subscriber_uuid, trigger_uuid, uuid }
-    #                where trigger_uuid matches this trigger's uuid field and subscriber_uuid matches notification uuid
+    #                where trigger_uuid matches this trigger's uuid field and subscriber_uuid matches notification _guid
     #        and users is a list of dictionaries of users with
     #             { label , manage, type, value (UUID), write }
 
     if 'subscriptions' in trig:
       for n in trig['subscriptions']:
+          # Get the name of the notification in the subscription, if it exists
           # Note that there seem to be old? redundant? subscriptions that still exist
           # They are the ones whose subscriber_uuid does not match any notification object _guid
           try:  

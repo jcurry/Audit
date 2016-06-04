@@ -1,4 +1,4 @@
-Fri Feb  5 17:51:12 2016
+Sat Jun  4 14:36:02 2016
 
 NOTIFICATION LIST
 
@@ -11,7 +11,7 @@ Subscriptions (ie. Triggers)
 [{'name': u'App_Cat_Test', 'uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8'}]
 
 Subscriber trigger rules 
-     App_Cat_Test  ("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0)
+     App_Cat_Test  ("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in evt.zp_det.Category) and (dev.production_state == 1000) and (evt.status == 0)
  
 
  NOTIFICATION Name Important_File_Dir_Email  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 45b85f59-9d6a-4eba-a4b4-66d5393e6403  
@@ -19,13 +19,11 @@ Subscriber trigger rules
 []
 
 Subscriptions (ie. Triggers) 
-[{'name': u'File_test', 'uuid': u'26272be5-754e-47f1-90b3-b2d36737adb8'},
- {'name': u'Important_File_Dir',
+[{'name': u'Important_File_Dir',
   'uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92'}]
 
 Subscriber trigger rules 
-     File_test  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))
-    Important_File_Dir  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))
+     Important_File_Dir  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (hasattr(zp_det, "fileDirName") and "fredtest" in zp_det.fileDirName)
  
 
  NOTIFICATION Name MSExchangeISWMTotal16MBFreeBlocks  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 20e85815-f96a-4538-9270-065a40c2b1e6  
@@ -460,7 +458,7 @@ Users
 TRIGGER name is App_Cat  Enabled is False UUID is c39b1a56-328b-437d-a084-12050b42fd79  
 Trigger rule is 
 {'api_version': 1,
- 'source': u'(dev.production_state == 1000) and ("/App" in evt.event_class) and ("DB" in Category)',
+ 'source': u'(dev.production_state == 1000) and ("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)',
  'type': 1}
 
 No Subscriptions (ie. Notifications) 
@@ -471,7 +469,7 @@ Users
 TRIGGER name is App_Cat_Test  Enabled is True UUID is 3722e70f-90a4-46c3-a51a-cf53e716c9a8  
 Trigger rule is 
 {'api_version': 1,
- 'source': u'("/App" in evt.event_class) and ("DB" in evt.Category) and (dev.production_state == 1000) and (evt.status == 0)',
+ 'source': u'("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in evt.zp_det.Category) and (dev.production_state == 1000) and (evt.status == 0)',
  'type': 1}
 
 Subscriptions (ie. Notifications) 
@@ -505,29 +503,10 @@ Users
 []
 
 
-TRIGGER name is File_test  Enabled is False UUID is 26272be5-754e-47f1-90b3-b2d36737adb8  
+TRIGGER name is Important_File_Dir  Enabled is True UUID is 4e3e0260-9f80-412b-989c-d23c26875c92  
 Trigger rule is 
 {'api_version': 1,
- 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))',
- 'type': 1}
-
-Subscriptions (ie. Notifications) 
-{'delay_seconds': 0,
- 'notif_name': 'Important_File_Dir_Email',
- 'repeat_seconds': 0,
- 'send_initial_occurrence': True,
- 'subscriber_uuid': u'45b85f59-9d6a-4eba-a4b4-66d5393e6403',
- 'trigger_uuid': u'26272be5-754e-47f1-90b3-b2d36737adb8',
- 'uuid': u'000c29b5-8a24-9a73-11e5-cbe7ccb5f9b9'}
-
-Users  
-[]
-
-
-TRIGGER name is Important_File_Dir  Enabled is False UUID is 4e3e0260-9f80-412b-989c-d23c26875c92  
-Trigger rule is 
-{'api_version': 1,
- 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))',
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (hasattr(zp_det, "fileDirName") and "fredtest" in zp_det.fileDirName)',
  'type': 1}
 
 Subscriptions (ie. Notifications) 
@@ -537,7 +516,7 @@ Subscriptions (ie. Notifications)
  'send_initial_occurrence': True,
  'subscriber_uuid': u'45b85f59-9d6a-4eba-a4b4-66d5393e6403',
  'trigger_uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92',
- 'uuid': u'000c29b5-8a24-9a73-11e5-cbe9031dc850'}
+ 'uuid': u'000c29b5-8a24-a4f1-11e5-ed2716464796'}
 
 Users  
 []
