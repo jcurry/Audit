@@ -27,6 +27,7 @@ in the Zenoss Zope database.
     * Triggers and notifications
 
 
+
 The scripts take a single parameter, "-f <output file>" eg.
 
     ./deviceClasses_to_file.py -f deviceClasses_to_file.out
