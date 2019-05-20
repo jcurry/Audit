@@ -1,9 +1,9 @@
-Sat Jun  4 14:36:02 2016
+Tue Oct 25 18:17:54 2016
 
 NOTIFICATION LIST
 
 =================
-NOTIFICATION Name App_Cat_Test  Enabled True Description  Action command Delay Secs 0 Repeat 0  _guid 10510b40-fb2a-47d6-8963-81ff48ca5d1c  
+NOTIFICATION Name App_Cat_Test_command  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 10510b40-fb2a-47d6-8963-81ff48ca5d1c  
  Recipients (users)  No Users 
 []
 
@@ -11,19 +11,49 @@ Subscriptions (ie. Triggers)
 [{'name': u'App_Cat_Test', 'uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8'}]
 
 Subscriber trigger rules 
-     App_Cat_Test  ("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in evt.zp_det.Category) and (dev.production_state == 1000) and (evt.status == 0)
+     App_Cat_Test  ("/App" in evt.event_class) and (dev.production_state == 1000) and (evt.status == 0) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)
+ 
+
+ NOTIFICATION Name App_Cat_Test_email  Enabled False Description  Action email Delay Secs 0 Repeat 0  _guid cc025802-d2c1-4e10-8b19-de877dd6e5c8  
+ Recipients (users)  No Users 
+[]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'App_Cat_Test', 'uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8'}]
+
+Subscriber trigger rules 
+     App_Cat_Test  ("/App" in evt.event_class) and (dev.production_state == 1000) and (evt.status == 0) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)
+ 
+
+ NOTIFICATION Name App_Cat_Test_fancyemail  Enabled True Description  Action fancyemail Delay Secs 0 Repeat 0  _guid f6ffe8f3-4cf1-4fcc-95a6-027dc7ad0044  
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
+
+Subscriptions (ie. Triggers) 
+[{'name': u'App_Cat_Test', 'uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8'}]
+
+Subscriber trigger rules 
+     App_Cat_Test  ("/App" in evt.event_class) and (dev.production_state == 1000) and (evt.status == 0) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)
  
 
  NOTIFICATION Name Important_File_Dir_Email  Enabled True Description  Action email Delay Secs 0 Repeat 0  _guid 45b85f59-9d6a-4eba-a4b4-66d5393e6403  
- Recipients (users)  No Users 
-[]
+ Recipients (users)  jane (User)     
+[{'label': 'jane (User)',
+  'manage': False,
+  'type': 'user',
+  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
+  'write': False}]
 
 Subscriptions (ie. Triggers) 
 [{'name': u'Important_File_Dir',
   'uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92'}]
 
 Subscriber trigger rules 
-     Important_File_Dir  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (hasattr(zp_det, "fileDirName") and "fredtest" in zp_det.fileDirName)
+     Important_File_Dir  (dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))
  
 
  NOTIFICATION Name MSExchangeISWMTotal16MBFreeBlocks  Enabled False Description  Action command Delay Secs 0 Repeat 0  _guid 20e85815-f96a-4538-9270-065a40c2b1e6  
@@ -142,21 +172,6 @@ Subscriber trigger rules
  
 
  NOTIFICATION Name jc1  Enabled False Description  Action Htmlemail Delay Secs 0 Repeat 0  _guid 6f370a76-f6ec-4061-84ae-8021e5ed14f7  
- Recipients (users)  jane (User)     
-[{'label': 'jane (User)',
-  'manage': False,
-  'type': 'user',
-  'value': '9bbb5148-1dfe-4f7d-b353-b890d6e5f859',
-  'write': False}]
-
-Subscriptions (ie. Triggers) 
-[{'name': u'App', 'uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e'}]
-
-Subscriber trigger rules 
-     App  ("/App" in evt.event_class) and ("localhost" not in elem.name) and (evt.summary != "stopped") and (evt.summary != "started")
- 
-
- NOTIFICATION Name jc2  Enabled True Description  Action fancyemail Delay Secs 0 Repeat 0  _guid f7f321c7-7279-4f88-ab33-5395fa39bd5c  
  Recipients (users)  jane (User)     
 [{'label': 'jane (User)',
   'manage': False,
@@ -443,25 +458,8 @@ No notification name for notification subscriber with subscriber_uuid 8918801c-4
 No notification name for notification subscriber with subscriber_uuid 8fe048b9-6d75-44cc-bd24-5c03531d4d93 
 No notification name for notification subscriber with subscriber_uuid c85acfc3-46eb-4452-8782-b3f01a2aba06 
 No notification name for notification subscriber with subscriber_uuid eec587be-6231-41ae-88e4-7a7e3f5d39c4 
-{'delay_seconds': 0,
- 'notif_name': 'jc2',
- 'repeat_seconds': 0,
- 'send_initial_occurrence': True,
- 'subscriber_uuid': u'f7f321c7-7279-4f88-ab33-5395fa39bd5c',
- 'trigger_uuid': u'47f21383-3ae4-45a3-9201-86c17b64bb6e',
- 'uuid': u'000c2928-6eff-a682-11e4-6fc69ef8ca34'}
+No notification name for notification subscriber with subscriber_uuid f7f321c7-7279-4f88-ab33-5395fa39bd5c 
 
-Users  
-[]
-
-
-TRIGGER name is App_Cat  Enabled is False UUID is c39b1a56-328b-437d-a084-12050b42fd79  
-Trigger rule is 
-{'api_version': 1,
- 'source': u'(dev.production_state == 1000) and ("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)',
- 'type': 1}
-
-No Subscriptions (ie. Notifications) 
 Users  
 []
 
@@ -469,17 +467,31 @@ Users
 TRIGGER name is App_Cat_Test  Enabled is True UUID is 3722e70f-90a4-46c3-a51a-cf53e716c9a8  
 Trigger rule is 
 {'api_version': 1,
- 'source': u'("/App" in evt.event_class) and (hasattr(zp_det, "Category") and "DB" in evt.zp_det.Category) and (dev.production_state == 1000) and (evt.status == 0)',
+ 'source': u'("/App" in evt.event_class) and (dev.production_state == 1000) and (evt.status == 0) and (hasattr(zp_det, "Category") and "DB" in zp_det.Category)',
  'type': 1}
 
 Subscriptions (ie. Notifications) 
 {'delay_seconds': 0,
- 'notif_name': 'App_Cat_Test',
+ 'notif_name': 'App_Cat_Test_command',
  'repeat_seconds': 0,
  'send_initial_occurrence': True,
  'subscriber_uuid': u'10510b40-fb2a-47d6-8963-81ff48ca5d1c',
  'trigger_uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8',
- 'uuid': u'000c2928-6eff-9270-11e4-5537986add93'}
+ 'uuid': u'000c29b5-8a24-9157-11e6-9ac2f41e7b09'}
+{'delay_seconds': 0,
+ 'notif_name': 'App_Cat_Test_email',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'cc025802-d2c1-4e10-8b19-de877dd6e5c8',
+ 'trigger_uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8',
+ 'uuid': u'000c29b5-8a24-9157-11e6-9ac2f420c4fa'}
+{'delay_seconds': 0,
+ 'notif_name': 'App_Cat_Test_fancyemail',
+ 'repeat_seconds': 0,
+ 'send_initial_occurrence': True,
+ 'subscriber_uuid': u'f6ffe8f3-4cf1-4fcc-95a6-027dc7ad0044',
+ 'trigger_uuid': u'3722e70f-90a4-46c3-a51a-cf53e716c9a8',
+ 'uuid': u'000c29b5-8a24-9157-11e6-9ac2f4235d0b'}
 
 Users  
 []
@@ -506,7 +518,7 @@ Users
 TRIGGER name is Important_File_Dir  Enabled is True UUID is 4e3e0260-9f80-412b-989c-d23c26875c92  
 Trigger rule is 
 {'api_version': 1,
- 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (hasattr(zp_det, "fileDirName") and "fredtest" in zp_det.fileDirName)',
+ 'source': u'(dev.production_state == 1000) and (evt.severity >= 4) and (evt.event_class.startswith("/DirFile")) and (evt.status == 0) and (fileDirName.startswith("/opt/zenoss/local/fredtest"))',
  'type': 1}
 
 Subscriptions (ie. Notifications) 
@@ -516,7 +528,7 @@ Subscriptions (ie. Notifications)
  'send_initial_occurrence': True,
  'subscriber_uuid': u'45b85f59-9d6a-4eba-a4b4-66d5393e6403',
  'trigger_uuid': u'4e3e0260-9f80-412b-989c-d23c26875c92',
- 'uuid': u'000c29b5-8a24-a4f1-11e5-ed2716464796'}
+ 'uuid': u'000c29b5-8a24-9157-11e6-9ac2d79a86d5'}
 
 Users  
 []
